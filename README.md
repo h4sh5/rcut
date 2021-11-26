@@ -16,6 +16,12 @@ example usage:
 
 `rcut -d , -f 1 test.csv`
 
+multiple fields (output default sep'd by space)
+
+`rcut -d , -f 1,2,3 test.csv`
+
+using a string as delim
+
 `rcut -d "----" -f 2 something.txt`
 
 it also reads stdin when you don't give it a file
