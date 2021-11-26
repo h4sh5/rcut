@@ -20,8 +20,8 @@ struct RcutOpt {
     #[structopt(short = "d", long = "delimeter", default_value = " ")]
     delim: String,
 
-    #[structopt(short = "f", long = "field", default_value = "1")]
-    field: usize,
+    #[structopt(short = "f", long = "fields", default_value = "1")]
+    fields: String,
 
     /// Input file
     #[structopt(parse(from_os_str))]
@@ -36,7 +36,7 @@ where P: AsRef<Path>, {
     Ok(io::BufReader::new(file).lines())
 }
 
-fn get_nth_token(line: String, delim: String, field: usize) -> String {
+fn get_nth_token(line: &String, delim: String, field: usize) -> String {
     let token_opt =  line.split(&delim).nth(field - 1); //unwrap().to_string();
     if token_opt == None {
         return String::from("");
@@ -53,6 +53,11 @@ fn main() {
         // println!("delim: {}", opt.delim);
     }
 
+    let mut fields = Vec::new();
+    for d in opt.fields.split(',') {
+        fields.push(d.parse::<usize>().unwrap());
+    }
+
     let delim = &opt.delim;
 
 
@@ -60,16 +65,26 @@ fn main() {
         let stdin = io::stdin();
         for line in stdin.lock().lines() {
             // println!("{}", line.unwrap());
-            println!("{}", get_nth_token(line.unwrap(), delim.to_string(), opt.field));
+            let l = &line.unwrap();
+            for f in &fields {
+                // default output separator is space
+                print!("{} ", get_nth_token(l, delim.to_string(), *f));
+            }
+            println!();
+            
         }
     } else {
-        if let Ok(lines) = read_lines(opt.input.unwrap().into_os_string()) {
+        if let Ok(lines) = read_lines(&opt.input.unwrap().into_os_string()) {
         // Consumes the iterator, returns an (Optional) String
         for line in lines {
             // println!("{:?}", line);
-            if let Ok(l) = line {
-                println!("{}", get_nth_token(l, delim.to_string(), opt.field));
+            
+            for f in &fields {
+                if let Ok(l) = &line {
+                    print!("{} ", get_nth_token(&l, delim.to_string(), *f));
+                }
             }
+            println!();
         }
         }
        
