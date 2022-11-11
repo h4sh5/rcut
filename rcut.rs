@@ -1,5 +1,4 @@
 use std::io;
-// use std::io::prelude::*;
 
 
 use std::path::PathBuf;
@@ -8,6 +7,22 @@ use structopt::StructOpt;
 use std::fs::File;
 use std::io::{BufRead};
 use std::path::Path;
+
+// handle sigpipe properly so that things like rcut | head won't panic
+
+#[cfg(unix)]
+fn handle_sigpipe() {
+    unsafe {
+        libc::signal(libc::SIGPIPE, libc::SIG_DFL);
+    }
+}
+
+#[cfg(not(unix))]
+fn handle_sigpipe() {
+    // no-op
+}
+
+
 
 static EOLMARKER: &str  = "";
 
@@ -54,6 +69,8 @@ fn get_nth_token(line: &String, delim: String, field: usize) -> String {
 }
 
 fn main() {
+    handle_sigpipe();
+
     let opt = RcutOpt::from_args();
     
     if opt.verbose {
