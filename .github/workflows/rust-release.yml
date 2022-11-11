@@ -31,15 +31,18 @@ jobs:
         include:
           - target: x86_64-pc-windows-gnu
             suffix: windows-x86_64
+            archive: zip
           - target: x86_64-unknown-linux-gnu
             suffix: linux-x86_64
+            archive: tar.gz
           - target: x86_64-apple-darwin
             suffix: darwin-x86_64
+            archive: tar.gz
     runs-on: ubuntu-latest
     steps:
       - name: Clone test repository
         uses: actions/checkout@v2
-      - uses: xhaiker/rust-release.action@v1.0.0
+      - uses: h4sh5/rust-release.action@v1.0.0
         name: build ${{ matrix.name }}
         with:
           release: ${{ github.ref_name }}
