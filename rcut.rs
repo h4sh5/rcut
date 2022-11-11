@@ -24,7 +24,7 @@ fn handle_sigpipe() {
 
 
 
-static EOLMARKER: &str  = "";
+static EOLMARKER: &str  = "@#$%^&*|";
 
 #[derive(Debug, StructOpt)]
 #[structopt(name = "rcut", about = "cut written in rust, supporting string delimeters (not just a single char)")]
@@ -115,7 +115,12 @@ fn main() {
                 let l = &line.unwrap();
                 for f in &fields {
                     // default output separator is space
-                    print!("{} ", get_nth_token(l, delim.to_string(), *f));
+                    let t  = get_nth_token(l, delim.to_string(),*f);
+                        if t != EOLMARKER {
+                            print!("{} ", t);    
+                        }
+                    
+                    
                 }
                 println!();
                 
@@ -149,7 +154,10 @@ fn main() {
                     
                     for f in &fields {
                         if let Ok(l) = &line {
-                            print!("{} ", get_nth_token(&l, delim.to_string(), *f));
+                            let t = get_nth_token(&l, delim.to_string(), *f);
+                            if t != EOLMARKER {
+                                print!("{} ", t);    
+                            }
                         }
                     }
                     println!();
