@@ -10,11 +10,17 @@ install rust, then run `cargo build` and find the `rcut` binary somewhere in `ta
 
 ## usage
 
-usage is pretty much the same as `cut`, and the only currently supported flags are `-d` and `-f`
+usage is pretty much the same as `cut`, and the only currently supported flags are `-d` and `-f` (as well as the new `-n`)
 
 example usage:
 
 `rcut -d , -f 1 test.csv`
+
+getting the field/column number of each field (useful for finding the field number of data in files with many columns)
+
+It will be displayed next to the field like `[1]fieldone [2]fieldtwo [3]abc`
+
+`rcut -d, -n test.csv`
 
 multiple fields (output default sep'd by space)
 
