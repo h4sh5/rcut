@@ -3,7 +3,11 @@ on:
   push:
     tags:
       - 'v*'
-
+  workflow_dispatch: # this is a nice option that will enable a button w/ inputs
+    inputs:
+      git-ref:
+        description: Git Ref (Optional)    
+        required: false
 jobs:
   release:
     name: Create Release
