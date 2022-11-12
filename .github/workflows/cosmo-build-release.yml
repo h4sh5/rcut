@@ -1,4 +1,4 @@
-name: Cosmo-build
+name: Cosmo build release
 
 on:
   push:
@@ -15,7 +15,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  build-release:
 
     runs-on: ubuntu-latest
 
@@ -28,4 +28,35 @@ jobs:
 
     - name: build
       run: ./cosmo_build.sh
+
+    - name: compress binary
+      run: cd target/x86_64-unknown-linux-cosmo/release && zip rcut.zip rcut.com && tar cvzf rcut.tar.gz rcut.com
+
+    - name: create release  
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        draft: false
+        prerelease: false
+        release_name: rcut ${{ github.ref }}
+        tag_name: ${{ github.ref }}
+
+    - name: upload rcut cosmo tgz
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        asset_path: ./target/x86_64-unknown-linux-cosmo/release/rcut.tar.gz
+        asset_name: rcut.tar.gz
+        asset_content_type: application/gzip
+
+    - name: upload rcut cosmo zip
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        asset_path: ./target/x86_64-unknown-linux-cosmo/release/rcut.zip
+        asset_name: rcut.zip
+        asset_content_type: application/zip
+  
 
