@@ -1,0 +1,39 @@
+name: Cosmopolitan build
+
+on:
+  push:
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: # this is a nice option that will enable a button w/ inputs
+    inputs:
+      git-ref:
+        description: Git Ref (Optional)    
+        required: false
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install cosmopolitan
+      run: |
+      mkdir libcosmo
+      cd libcosmo
+      wget https://justine.lol/cosmopolitan/cosmopolitan.zip
+      unzip cosmopolitan.zip
+      ls -al
+      cd ../
+    - name: Install rust nightly toolchains
+      run: |
+      rustup toolchain install nightly-x86_64-unknown-linux-gnu
+      rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
+
+    - name: build
+      run: ./cosmo_build.sh
+
