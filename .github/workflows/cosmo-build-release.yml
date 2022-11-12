@@ -47,7 +47,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         asset_path: ./target/x86_64-unknown-linux-cosmo/release/rcut.tar.gz
-        asset_name: rcut.tar.gz
+        asset_name: rcut-${{ github.ref }}.tar.gz
         asset_content_type: application/gzip
 
     - name: upload rcut cosmo zip
@@ -56,7 +56,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         asset_path: ./target/x86_64-unknown-linux-cosmo/release/rcut.zip
-        asset_name: rcut.zip
+        asset_name: rcut-${{ github.ref }}.zip
         asset_content_type: application/zip
   
 
