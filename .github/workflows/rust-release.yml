@@ -1,13 +1,13 @@
 name: release
 on:
-  push:
-    tags:
-      - 'v*'
-  # workflow_dispatch: # this is a nice option that will enable a button w/ inputs
-  #   inputs:
-  #     git-ref:
-  #       description: Git Ref (Optional)    
-  #       required: false
+  # push:
+  #   tags:
+  #     - 'v*'
+  workflow_dispatch: # this is a nice option that will enable a button w/ inputs
+    inputs:
+      git-ref:
+        description: Git Ref (Optional)    
+        required: false
 jobs:
   release:
     name: Create Release
@@ -20,7 +20,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: v-gh-multi-${{ github.ref }}
           release_name: ${{ github.ref }}
           draft: false
           prerelease: false
