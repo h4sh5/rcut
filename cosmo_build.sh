@@ -1,0 +1,1 @@
+cargo +nightly build --release -Zbuild-std=panic_abort,std -Zbuild-std-features="" --target=./x86_64-unknown-linux-cosmo.json && objcopy -SO binary ./target/x86_64-unknown-linux-cosmo/release/rcut.com.dbg ./target/x86_64-unknown-linux-cosmo/release/rcut.com

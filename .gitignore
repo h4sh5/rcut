@@ -1,0 +1,6 @@
+*.com.dbg
+libcosmo
+libcosmo/*
+.*.swp
+tags
+target
