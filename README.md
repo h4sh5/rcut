@@ -8,6 +8,33 @@ the main difference is that the delimeter `-d` supports strings, not just single
 
 install rust, then run `cargo build` and find the `rcut` binary somewhere in `target/`
 
+to build with cosmopolitan libc (to make an actual portable executable that can run on both linux, windows, mac and BSDs):
+
+- install cosmopolitan into libcosmo
+
+```
+mkdir libcosmo
+cd libcosmo
+wget https://justine.lol/cosmopolitan/cosmopolitan.zip
+unzip cosmopolitan.zip
+ls -al
+# should have cosmopolitan.a, ape.lds etc.
+cd ../
+```
+
+- install rust toolchains
+
+```
+# on Debian / Fedora, do this
+rustup toolchain install nightly-x86_64-unknown-linux-gnu
+rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
+# on Alpine Linux / any with musl instead of glibc, you may need to do
+rustup toolchain install nightly-x86_64-unknown-linux-musl
+rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-musl
+```
+
+- run `./cosmo_build.sh`
+
 ## usage
 
 usage is pretty much the same as `cut`, and the only currently supported flags are `-d` and `-f` (as well as the new `-n`)
