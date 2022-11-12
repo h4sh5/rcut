@@ -1,11 +1,15 @@
 name: Rust
 
 on:
-  push:
-    branches: [ main ]
+  # push:
+  #   branches: [ main ]
   pull_request:
     branches: [ main ]
-
+  workflow_dispatch: # this is a nice option that will enable a button w/ inputs
+    inputs:
+      git-ref:
+        description: Git Ref (Optional)    
+        required: false
 env:
   CARGO_TERM_COLOR: always
 
