@@ -51,6 +51,8 @@ jobs:
         asset_path: ./target/x86_64-unknown-linux-cosmo/release/rcut.tar.gz
         asset_name: rcut-${{ github.ref }}.tar.gz
         asset_content_type: application/gzip
+        # works because of previous step with id: create_release
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
 
     - name: upload rcut cosmo zip
       uses: actions/upload-release-asset@v1
@@ -60,5 +62,6 @@ jobs:
         asset_path: ./target/x86_64-unknown-linux-cosmo/release/rcut.zip
         asset_name: rcut-${{ github.ref }}.zip
         asset_content_type: application/zip
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
   
 
