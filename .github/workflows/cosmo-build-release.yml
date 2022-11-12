@@ -39,7 +39,9 @@ jobs:
         draft: false
         prerelease: false
         release_name: rcut ${{ github.ref }}
-        tag_name: ${{ github.ref }}
+        tag_name: gh-v-${{ github.ref }}
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
 
     - name: upload rcut cosmo tgz
       uses: actions/upload-release-asset@v1
