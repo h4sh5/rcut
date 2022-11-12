@@ -1,4 +1,4 @@
-name: Cosmopolitan build
+name: Cosmo-build
 
 on:
   push:
