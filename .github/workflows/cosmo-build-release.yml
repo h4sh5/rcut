@@ -1,11 +1,11 @@
 name: Cosmo build release
 
 on:
-  push:
-    tags:
-      - 'v*'
-  pull_request:
-    branches: [ main ]
+  # push:
+    # tags:
+      # - 'v*'
+  # pull_request:
+    # branches: [ main ]
   workflow_dispatch: # this is a nice option that will enable a button w/ inputs
     inputs:
       git-ref:
