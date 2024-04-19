@@ -46,7 +46,7 @@ jobs:
     steps:
       - name: Clone test repository
         uses: actions/checkout@v2
-      - uses: h4sh5/rust-release.action@latest
+      - uses: h4sh5/rust-release.action@main
         name: build ${{ matrix.name }}
         with:
           release: ${{ github.ref_name }}
