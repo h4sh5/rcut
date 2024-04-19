@@ -1,8 +1,8 @@
-name: build release binaries
+name: release
 on:
-  push:
-    tags:
-      - 'v*'
+  # push:
+  #   tags:
+  #     - 'v*'
   workflow_dispatch: # this is a nice option that will enable a button w/ inputs
     inputs:
       git-ref:
@@ -42,11 +42,14 @@ jobs:
           - target: x86_64-apple-darwin
             suffix: darwin-x86_64
             archive: tar.gz
+            - target: arm64-apple-darwin
+            suffix: darwin-arm64
+            archive: tar.gz
     runs-on: ubuntu-latest
     steps:
       - name: Clone test repository
         uses: actions/checkout@v2
-      - uses: h4sh5/rust-release.action@main
+      - uses: xhaiker/rust-release.action@v1.0.0
         name: build ${{ matrix.name }}
         with:
           release: ${{ github.ref_name }}
