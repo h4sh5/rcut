@@ -50,8 +50,7 @@ jobs:
       CROSS_VERSION: v0.2.5
       # Emit backtraces on panics.
       RUST_BACKTRACE: 1
-      # Build static releases with PCRE2.
-      PCRE2_SYS_STATIC: 1
+
     strategy:
       fail-fast: false
       matrix:
@@ -167,7 +166,7 @@ jobs:
     - name: Build release binary
       shell: bash
       run: |
-        ${{ env.CARGO }} build --verbose --release --features pcre2 ${{ env.TARGET_FLAGS }}
+        ${{ env.CARGO }} build --verbose --release ${{ env.TARGET_FLAGS }}
         if [ "${{ matrix.os }}" = "windows-latest" ]; then
           bin="target/${{ matrix.target }}/release/rcut.exe"
         else
@@ -239,9 +238,7 @@ jobs:
       TARGET: x86_64-unknown-linux-musl
       # Emit backtraces on panics.
       RUST_BACKTRACE: 1
-      # Since we're distributing the dpkg, we don't know whether the user will
-      # have PCRE2 installed, so just do a static build.
-      PCRE2_SYS_STATIC: 1
+
 
     steps:
     - name: Checkout repository
