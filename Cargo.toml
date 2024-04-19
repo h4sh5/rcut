@@ -2,7 +2,8 @@
 name = "rcut"
 version = "0.2.3"
 edition = "2021"
-
+description = "rcut is a cut like program written in rust, with full string delimiters"
+authors = ["Haoxi Tan"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
