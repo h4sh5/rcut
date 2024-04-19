@@ -4,7 +4,6 @@ version = "0.2.3"
 edition = "2021"
 description = "rcut is a cut like program written in rust, with full string delimiters"
 authors = ["Haoxi Tan"]
-license-file = "LICENSE"
 license = "GPL-3.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -15,3 +14,20 @@ libc = "0.2.137"
 [[bin]]
 name = "rcut"
 path = "rcut.rs"
+
+# This is the main way to strip binaries in the deb package created by
+# 'cargo deb'. For other release binaries, we (currently) call 'strip'
+# explicitly in the release process.
+[profile.deb]
+inherits = "release"
+debug = false
+
+[package.metadata.deb]
+section = "utils"
+assets = [
+  ["target/release/rcut", "usr/bin/", "755"],
+  ["README.md", "usr/share/doc/rcut/README", "644"],
+]
+extended-description = """\
+rcut is a cut like program written in rust, with full string delimiters and -n for showing index next to each item
+"""
