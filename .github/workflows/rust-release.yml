@@ -42,7 +42,7 @@ jobs:
           - target: x86_64-apple-darwin
             suffix: darwin-x86_64
             archive: tar.gz
-            - target: arm64-apple-darwin
+          - target: arm64-apple-darwin
             suffix: darwin-arm64
             archive: tar.gz
     runs-on: ubuntu-latest
