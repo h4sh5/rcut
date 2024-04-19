@@ -1,8 +1,8 @@
 name: build release binaries
 on:
-  # push:
-  #   tags:
-  #     - 'v*'
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch: # this is a nice option that will enable a button w/ inputs
     inputs:
       git-ref:
