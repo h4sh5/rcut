@@ -1,60 +1,29 @@
-name: release
+# .github/workflows/release.yml
+
 on:
-  push:
-    tags:
-      - 'v*'
-  workflow_dispatch: # this is a nice option that will enable a button w/ inputs
-    inputs:
-      git-ref:
-        description: Git Ref (Optional)    
-        required: false
+  release:
+    types: [created]
+
 jobs:
   release:
-    name: Create Release
+    name: release ${{ matrix.target }}
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-      - name: Create Release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.ref }}
-          release_name: ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-  publish:
-    name: publish ${{ matrix.name }}
-    needs:
-      - release
     strategy:
       fail-fast: false
       matrix:
         include:
           - target: x86_64-pc-windows-gnu
-            suffix: windows-x86_64
             archive: zip
-          - target: x86_64-unknown-linux-gnu
-            suffix: linux-x86_64
-            archive: tar.gz
+          - target: x86_64-unknown-linux-musl
+            archive: tar.gz tar.xz tar.zst
           - target: x86_64-apple-darwin
-            suffix: darwin-x86_64
-            archive: tar.gz
-          - target: aarch64-apple-darwin
-            suffix: darwin-aarch64
-            archive: tar.gz
-    runs-on: ubuntu-latest
+            archive: zip
     steps:
-      - name: Clone test repository
-        uses: actions/checkout@v2
-      - uses: xhaiker/rust-release.action@v1.0.0
-        name: build ${{ matrix.name }}
-        with:
-          release: ${{ github.ref_name }}
-          rust_target: ${{ matrix.target }}
-          archive_suffix: ${{ matrix.suffix }}
-          archive_types: ${{ matrix.archive }}
+      - uses: actions/checkout@master
+      - name: Compile and release
+        uses: rust-build/rust-build.action@v1.4.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          RUSTTARGET: ${{ matrix.target }}
+          ARCHIVE_TYPES: ${{ matrix.archive }}
