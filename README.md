@@ -14,6 +14,41 @@ $ echo a + b + c + d | rcut -d ' + ' -n
 ```
 
 
+## installation
+
+
+### The clean way
+
+You need cargo and rust installed on your system first
+
+```
+cargo install --git https://github.com/h4sh5/rcut
+```
+
+### The untamed way
+
+(if you don't have cargo but have python... look, its all RCE anyway)
+
+```
+curl https://h4sh5.github.io/rcut/setup.py | python3
+```
+
+or from github raw
+
+```
+curl https://raw.githubusercontent.com/h4sh5/rcut/main/setup.py | python3
+```
+
+wget
+
+```
+wget -O-  https://h4sh5.github.io/rcut/setup.py | python3
+```
+
+### The slow way
+
+Download compiled binary from https://github.com/h4sh5/rcut/releases
+
 
 ## usage
 
@@ -40,6 +75,7 @@ using a string as delim
 it also reads stdin when you don't give it a file
 
 `cat /etc/passwd | rcut -d : -f 2`
+
 
 ## compile with rust
 
