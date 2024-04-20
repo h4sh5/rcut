@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: rcut
+Version: 0.2.3
+Summary: cut in rust with full string delimiters
+Author: h4sh
+Author-email: h4sh5@pm.me
+License-File: LICENSE
